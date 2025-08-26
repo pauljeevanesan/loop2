@@ -22,8 +22,12 @@ use App\Http\Controllers\student\WishListController;
 use App\Http\Controllers\student\TutorBookingController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AIPlannerController;
+use App\Http\Livewire\QuizPlayer;
 
 Route::middleware(['auth'])->group(function () {
+    // Quiz Player
+    Route::get('/quiz/{id}', QuizPlayer::class)->name('quiz.take');
+
     // AI Course Planner
     Route::get('/ai-course-planner', [AIPlannerController::class, 'index'])->name('ai.course.planner');
 

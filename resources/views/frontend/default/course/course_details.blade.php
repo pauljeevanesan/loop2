@@ -119,7 +119,7 @@
                                     @include('frontend.default.course.overview_area')
                                 </div>
                                 <div class="tab-pane fade" id="pills-course-content" role="tabpanel" aria-labelledby="pills-course-content-tab" tabindex="0">
-                                    @include('frontend.default.course.content_area')
+                                    @livewire('course-curriculum', ['course' => $course_details])
                                 </div>
                                 <div class="tab-pane fade" id="pills-details" role="tabpanel" aria-labelledby="pills-details-tab" tabindex="0">
                                     @include('frontend.default.course.requirement_outcome_area')

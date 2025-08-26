@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-class OpenAIService
+class AzureOpenAIService
 {
     /**
      * Simulates a call to the OpenAI API to get a course plan.
@@ -93,6 +93,88 @@ PROMPT;
                         'chapters' => 5,
                     ],
                 ]
+            ]
+        ];
+    }
+
+    /**
+     * Simulates a call to the OpenAI API to get chapter content.
+     * @param string $courseTitle
+     * @param string $chapterTitle
+     * @param float|null $previousQuizScore
+     * @return array
+     */
+    public function getChapterContent(string $courseTitle, string $chapterTitle, ?float $previousQuizScore = null): array
+    {
+        $baseContent = 'This is the core learning text for ' . $chapterTitle . '. We will explore the fundamental ideas and theories.';
+        $analogy = 'Think of it like building with LEGOs. The concepts you just learned are the individual bricks...';
+
+        // --- Simulate Adaptive Content ---
+        if ($previousQuizScore !== null) {
+            if ($previousQuizScore < 70) {
+                // User struggled, provide more foundational content
+                $baseContent = 'It seems you had some trouble with the last chapter, so let\'s review. ' . $baseContent . ' We will take it slow and focus on the basics.';
+                $analogy = 'Let\'s use a simpler analogy. Imagine baking a cake. Each ingredient is a concept...';
+            } else {
+                // User did well, provide more advanced content
+                $baseContent = 'You did great on the last quiz! Let\'s move on to some more advanced topics in ' . $chapterTitle . '.';
+            }
+        }
+
+        // This is a mock response.
+        return [
+            'lessons' => [
+                [
+                    'title' => 'Understanding Core Concepts',
+                    'type' => 'text',
+                    'content' => $baseContent,
+                ],
+                [
+                    'title' => 'A Real-World Analogy',
+                    'type' => 'analogy',
+                    'content' => $analogy,
+                ],
+                [
+                    'title' => 'Find an Infographic',
+                    'type' => 'infographic_link',
+                    'content' => 'https://example.com/infographic.png',
+                ],
+                [
+                    'title' => 'Your Next Project',
+                    'type' => 'project',
+                    'content' => 'Based on your progress, your next task is to enhance the previous project with new concepts from this chapter.',
+                ],
+            ]
+        ];
+    }
+
+    /**
+     * Simulates a call to the OpenAI API to get quiz content.
+     * @param string $chapterContent
+     * @return array
+     */
+    public function getQuizContent(string $chapterContent): array
+    {
+        // This is a mock response. It ignores the chapter content for now.
+        return [
+            'title' => 'Chapter Quiz',
+            'duration_minutes' => 10,
+            'questions' => [
+                [
+                    'title' => 'What is the main topic of this chapter?',
+                    'options' => ['Topic A', 'Topic B', 'Core Concepts', 'Topic D'],
+                    'correct_answer_index' => 2,
+                ],
+                [
+                    'title' => 'Which analogy was used in this chapter?',
+                    'options' => ['Building a house', 'Cooking a meal', 'Building with LEGOs', 'Driving a car'],
+                    'correct_answer_index' => 2,
+                ],
+                [
+                    'title' => 'What is the goal of the mini-project?',
+                    'options' => ['To build a complex system', 'To apply learned concepts', 'To write a report', 'To design a UI'],
+                    'correct_answer_index' => 1,
+                ],
             ]
         ];
     }
