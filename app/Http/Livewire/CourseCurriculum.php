@@ -66,6 +66,7 @@ class CourseCurriculum extends Component
                     'title' => $lessonData['title'],
                     'description' => $lessonData['content'],
                     'lesson_type' => $lessonData['type'],
+                    'lesson_src' => $lessonData['lesson_src'],
                     'course_id' => $this->course->id,
                     'section_id' => $sectionId,
                     'user_id' => $this->course->user_id,

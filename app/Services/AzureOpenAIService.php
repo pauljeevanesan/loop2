@@ -127,21 +127,31 @@ PROMPT;
                 [
                     'title' => 'Understanding Core Concepts',
                     'type' => 'text',
+                    'lesson_src' => null,
                     'content' => $baseContent,
                 ],
                 [
                     'title' => 'A Real-World Analogy',
                     'type' => 'analogy',
+                    'lesson_src' => null,
                     'content' => $analogy,
+                ],
+                [
+                    'title' => 'Curated Video Explanation',
+                    'type' => 'video',
+                    'lesson_src' => 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', // Placeholder video
+                    'content' => 'This handpicked video provides a great visual explanation of the concepts we are discussing. Watch it to solidify your understanding.',
                 ],
                 [
                     'title' => 'Find an Infographic',
                     'type' => 'infographic_link',
-                    'content' => 'https://example.com/infographic.png',
+                    'lesson_src' => 'https://example.com/infographic.png',
+                    'content' => 'This link contains a helpful infographic that summarizes the key points.',
                 ],
                 [
                     'title' => 'Your Next Project',
                     'type' => 'project',
+                    'lesson_src' => null,
                     'content' => 'Based on your progress, your next task is to enhance the previous project with new concepts from this chapter.',
                 ],
             ]
