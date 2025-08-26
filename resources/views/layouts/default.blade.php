@@ -150,6 +150,10 @@
     @include('frontend.default.toaster')
     <!-- custom scripts -->
     @include('frontend.default.scripts')
+
+    <!-- Custom TTS Service -->
+    <script src="{{ asset('assets/frontend/default/js/tts.js') }}"></script>
+
     @stack('js')
 </body>
 

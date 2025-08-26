@@ -3,10 +3,15 @@
         <div class="chat-window mb-4" style="height: 400px; overflow-y: auto; border: 1px solid #e2e8f0; padding: 1rem; border-radius: 0.5rem;">
             @foreach ($conversation as $message)
                 <div class="message mb-4">
-                    <div class="font-bold @if ($message['role'] == 'user') text-blue-600 @else text-green-600 @endif">
-                        {{ $message['role'] === 'assistant' ? 'AI Planner' : 'You' }}
+                    <div class="font-bold @if ($message['role'] == 'user') text-blue-600 @else text-green-600 @endif d-flex align-items-center">
+                        <span>{{ $message['role'] === 'assistant' ? 'AI Planner' : 'You' }}</span>
+                        @if ($message['role'] === 'assistant')
+                            <button onclick="studaiTtsService.speak(this.closest('.message').querySelector('.message-content').textContent)" class="btn btn-sm btn-outline-secondary ms-2">
+                                <i class="fas fa-volume-up"></i>
+                            </button>
+                        @endif
                     </div>
-                    <div class="text-gray-800">
+                    <div class="text-gray-800 message-content">
                         {!! nl2br(e($message['content'])) !!}
                     </div>
                 </div>

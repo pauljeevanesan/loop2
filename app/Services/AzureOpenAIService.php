@@ -98,6 +98,16 @@ class AzureOpenAIService
         ];
         return $this->callApi($messages, true); // Expecting JSON quiz
     }
+
+    public function getSupportResponse(string $question, string $courseTitle): ?array
+    {
+        $systemPrompt = "You are a helpful AI support tutor for the course: '{$courseTitle}'. Answer the user's question based on the context of this course.";
+        $messages = [
+            ['role' => 'system', 'content' => $systemPrompt],
+            ['role' => 'user', 'content' => $question],
+        ];
+        return $this->callApi($messages, false); // Expecting a text response
+    }
 }
 
 */

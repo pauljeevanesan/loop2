@@ -86,3 +86,5 @@
         @endif
     </div>
 </div>
+
+@livewire('support-chat', ['course' => $course])
