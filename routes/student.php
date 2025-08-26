@@ -13,6 +13,7 @@ use App\Http\Controllers\student\MessageController;
 use App\Http\Controllers\student\MyBootcampsController;
 use App\Http\Controllers\student\MyCoursesController;
 use App\Http\Controllers\student\MyProfileController;
+use App\Http\Controllers\student\MyCertificatesController;
 use App\Http\Controllers\student\MyTeamPackageController;
 use App\Http\Controllers\student\OfflinePaymentController;
 use App\Http\Controllers\student\PurchaseController;
@@ -37,6 +38,9 @@ Route::middleware(['auth'])->group(function () {
         Route::post('my-profile/update/{user_id}', 'update')->name('update.profile');
         Route::post('update-profile-picture', 'update_profile_picture')->name('update.profile.picture');
     });
+
+    // my certificates
+    Route::get('my-certificates', [MyCertificatesController::class, 'index'])->name('my.certificates');
 
     // my wishlist routes
     Route::controller(WishListController::class)->group(function () {

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('course_id')->nullable();
             $table->string('identifier')->unique();
+            $table->string('path')->nullable(); // To store the path to the generated image
             $table->timestamps();
             
             $table->index('user_id');

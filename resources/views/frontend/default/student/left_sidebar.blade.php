@@ -110,6 +110,13 @@
                     </a>
                 </li>
 
+                <li class="@if ($current_route == 'my.certificates') active @endif">
+                    <a href="{{ route('my.certificates') }}">
+                        <i class="fi-rr-badge-check text-23px me-3 ms-1"></i>
+                        {{ get_phrase('My Certificates') }}
+                    </a>
+                </li>
+
                 <li>
                     <a href="{{ route('logout') }}" class="d-flex">
                         <i class="fi-rr-sign-out-alt text-23px me-3 ms-1"></i>

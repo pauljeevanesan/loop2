@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use App\Models\Quiz;
 use App\Models\Question;
 use App\Models\QuizResult;
+use App\Http\Controllers\CertificateController;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
@@ -65,6 +66,26 @@ class QuizPlayer extends Component
         ]);
 
         $this->quizFinished = true;
+
+        // --- Certificate Generation Logic ---
+        $course = $this->quiz->course;
+        $lastSection = $course->sections()->orderBy('sort', 'desc')->first();
+
+        // Check if this is the quiz for the last section of the course
+        if ($lastSection && $this->quiz->section_id == $lastSection->id) {
+            // Check if user has already been awarded a certificate for this course
+            $existingCertificate = \App\Models\Certificate::where('user_id', Auth::id())->where('course_id', $course->id)->exists();
+
+            if (!$existingCertificate) {
+                // For now, we award it regardless of score. This can be changed later.
+                $certificateController = new CertificateController();
+                $certificate = $certificateController->generate(Auth::user(), $course);
+
+                // We'll need a page to show the new certificate.
+                // For now, the result page will have to do.
+                // In the next step, we can create a dedicated page.
+            }
+        }
     }
 
     public function render()
