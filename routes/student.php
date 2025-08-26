@@ -21,8 +21,12 @@ use App\Http\Controllers\student\ReviewController;
 use App\Http\Controllers\student\WishListController;
 use App\Http\Controllers\student\TutorBookingController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AIPlannerController;
 
 Route::middleware(['auth'])->group(function () {
+    // AI Course Planner
+    Route::get('/ai-course-planner', [AIPlannerController::class, 'index'])->name('ai.course.planner');
+
     // my profile routes
     Route::controller(MyProfileController::class)->group(function () {
         Route::get('my-profile', 'index')->name('my.profile');
