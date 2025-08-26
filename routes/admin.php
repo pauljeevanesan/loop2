@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\OfflinePaymentController;
 use App\Http\Controllers\Admin\OpenAiController;
 use App\Http\Controllers\Admin\PageBuilderController;
 use App\Http\Controllers\Admin\QuestionController;
+use App\Http\Controllers\Admin\GamificationSettingsController;
 use App\Http\Controllers\Admin\QuizController;
 use App\Http\Controllers\Admin\TeamTrainingController;
 use App\Http\Controllers\BlogCategoryController;
@@ -450,6 +451,12 @@ Route::name('admin.')->prefix('admin')->middleware('admin')->group(function () {
         Route::get('tutor-booking/category/category-status-update/{id}/{status}', 'tutor_category_status')->name('tutor_category_status');
         Route::get('tutor-booking/category/delete/{id}', 'tutor_category_delete')->name('tutor_category_delete');
 
+    });
+
+    // Gamification Settings
+    Route::controller(GamificationSettingsController::class)->prefix('gamification')->name('gamification.')->group(function () {
+        Route::get('settings', 'index')->name('settings');
+        Route::post('settings/update', 'update')->name('settings.update');
     });
 
     Route::get('select-language/{language}', [LanguageController::class, 'select_lng'])->name('select.language');

@@ -14,6 +14,7 @@ use App\Http\Controllers\student\MyBootcampsController;
 use App\Http\Controllers\student\MyCoursesController;
 use App\Http\Controllers\student\MyProfileController;
 use App\Http\Controllers\student\MyCertificatesController;
+use App\Http\Controllers\student\PointHistoryController;
 use App\Http\Controllers\student\MyTeamPackageController;
 use App\Http\Controllers\student\OfflinePaymentController;
 use App\Http\Controllers\student\PurchaseController;
@@ -41,6 +42,9 @@ Route::middleware(['auth'])->group(function () {
 
     // my certificates
     Route::get('my-certificates', [MyCertificatesController::class, 'index'])->name('my.certificates');
+
+    // my points history
+    Route::get('my-points', [PointHistoryController::class, 'index'])->name('my.points');
 
     // my wishlist routes
     Route::controller(WishListController::class)->group(function () {

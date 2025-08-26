@@ -20,6 +20,9 @@
                     $email = auth()->user()->email;
                 @endphp
                 <p class="email">{{ strlen($email) > 22 ? substr($email, 0, 22) . '...' : $email }}</p>
+                <div class="mt-2">
+                    <span class="badge bg-primary"><i class="fas fa-star me-1"></i> {{ auth()->user()->points }} Points</span>
+                </div>
             </div>
             <ul class="couses-tab-list">
 
@@ -114,6 +117,13 @@
                     <a href="{{ route('my.certificates') }}">
                         <i class="fi-rr-badge-check text-23px me-3 ms-1"></i>
                         {{ get_phrase('My Certificates') }}
+                    </a>
+                </li>
+
+                <li class="@if ($current_route == 'my.points') active @endif">
+                    <a href="{{ route('my.points') }}">
+                        <i class="fi-rr-star text-23px me-3 ms-1"></i>
+                        {{ get_phrase('Points History') }}
                     </a>
                 </li>
 

@@ -6,6 +6,7 @@ use App\Models\Quiz;
 use App\Models\Question;
 use App\Models\QuizResult;
 use App\Http\Controllers\CertificateController;
+use App\Services\GamificationService;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
@@ -57,13 +58,18 @@ class QuizPlayer extends Component
         }
 
         // Save the quiz result
-        QuizResult::create([
+        $quizResult = QuizResult::create([
             'user_id' => Auth::id(),
             'quiz_id' => $this->quiz->id,
             'score' => $this->score,
             'total_questions' => $this->questions->count(),
             'percentage' => ($this->score / $this->questions->count()) * 100,
         ]);
+
+        // Award points for passing the quiz
+        // We can add a "pass percentage" check here later if needed.
+        $gamificationService = new GamificationService();
+        $gamificationService->awardPoints(Auth::user(), 'pass_quiz', $quizResult);
 
         $this->quizFinished = true;
 
