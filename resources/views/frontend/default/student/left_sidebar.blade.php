@@ -120,6 +120,13 @@
                     </a>
                 </li>
 
+                <li class="@if ($current_route == 'my.badges') active @endif">
+                    <a href="{{ route('my.badges') }}">
+                        <i class="fi-rr-award text-23px me-3 ms-1"></i>
+                        {{ get_phrase('My Badges') }}
+                    </a>
+                </li>
+
                 <li class="@if ($current_route == 'my.points') active @endif">
                     <a href="{{ route('my.points') }}">
                         <i class="fi-rr-star text-23px me-3 ms-1"></i>

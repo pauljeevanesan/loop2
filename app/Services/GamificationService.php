@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\User;
+use App\Models\Badge;
 use App\Models\GamificationSetting;
 use App\Models\PointTransaction;
 use Illuminate\Database\Eloquent\Model;
@@ -38,5 +39,55 @@ class GamificationService
             'related_type' => get_class($relatedModel),
             'related_id' => $relatedModel->id,
         ]);
+    }
+
+    /**
+     * Check all active badges and award them to the user if the criteria are met.
+     *
+     * @param User $user
+     * @param string $actionName The action that was just performed.
+     * @param Model|null $relatedModel The model related to the action.
+     */
+    public function checkAndAwardBadges(User $user, string $actionName, ?Model $relatedModel = null)
+    {
+        $badges = Badge::where('is_active', true)->where('rule_type', $actionName)->get();
+
+        foreach ($badges as $badge) {
+            // Check if user already has this badge
+            if ($user->badges()->where('badge_id', $badge->id)->exists()) {
+                continue;
+            }
+
+            $criteriaMet = false;
+            switch ($badge->rule_type) {
+                case 'perfect_quiz_score':
+                    // The related model should be a QuizResult
+                    if ($relatedModel instanceof \App\Models\QuizResult && $relatedModel->percentage >= 100) {
+                        $criteriaMet = true;
+                    }
+                    break;
+
+                case 'complete_lessons':
+                    // Get the total number of completed lessons for the user across all courses.
+                    $watchHistories = \App\Models\WatchHistory::where('student_id', $user->id)->get();
+                    $totalCompletedLessons = 0;
+                    foreach ($watchHistories as $history) {
+                        $completed = json_decode($history->completed_lesson, true);
+                        if (is_array($completed)) {
+                            $totalCompletedLessons += count($completed);
+                        }
+                    }
+
+                    if ($totalCompletedLessons >= (int)$badge->rule_value) {
+                        $criteriaMet = true;
+                    }
+                    break;
+            }
+
+            if ($criteriaMet) {
+                $user->badges()->attach($badge->id);
+                // Optionally, create a notification for the user here.
+            }
+        }
     }
 }

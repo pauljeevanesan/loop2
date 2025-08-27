@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\OpenAiController;
 use App\Http\Controllers\Admin\PageBuilderController;
 use App\Http\Controllers\Admin\QuestionController;
 use App\Http\Controllers\Admin\GamificationSettingsController;
+use App\Http\Controllers\Admin\BadgeController;
 use App\Http\Controllers\Admin\QuizController;
 use App\Http\Controllers\Admin\TeamTrainingController;
 use App\Http\Controllers\BlogCategoryController;
@@ -458,6 +459,9 @@ Route::name('admin.')->prefix('admin')->middleware('admin')->group(function () {
         Route::get('settings', 'index')->name('settings');
         Route::post('settings/update', 'update')->name('settings.update');
     });
+
+    // Badge Management
+    Route::resource('badges', BadgeController::class);
 
     Route::get('select-language/{language}', [LanguageController::class, 'select_lng'])->name('select.language');
 });

@@ -150,6 +150,8 @@ class PurchaseController extends Controller
                 'user_photo'      => auth()->user()->photo,
                 'cart_id'         => $items_id,
                 'coupon_discount' => $request->coupon_discount,
+                'points_used'     => $request->points_used,
+                'points_discount' => $request->points_discount,
                 'gifted_user_id'  => $gifted_user_id ?? '',
             ],
 

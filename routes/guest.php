@@ -11,11 +11,19 @@ use App\Http\Controllers\frontend\NewsletterController;
 use App\Http\Controllers\frontend\TeamTrainingController;
 use App\Http\Controllers\frontend\TutorBookingController;
 use App\Http\Controllers\CertificateController;
+use App\Http\Controllers\BadgeController;
+use App\Http\Controllers\frontend\LeaderboardController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 // Certificate Verification
 Route::get('/certificate/verify/{identifier}', [CertificateController::class, 'verify'])->name('certificate.verify');
+
+// Badge Sharing
+Route::get('/badge/share/{id}', [BadgeController::class, 'share'])->name('badge.share');
+
+// Leaderboard
+Route::get('/leaderboard', [LeaderboardController::class, 'index'])->name('leaderboard');
 
 Route::controller(HomeController::class)->group(function () {
     Route::get('/', 'index')->name('home');

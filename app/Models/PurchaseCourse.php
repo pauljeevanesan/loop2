@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
+use App\Services\GamificationService;
+use Illuminate\Support\Facades\Auth;
 
 class PurchaseCourse extends Model
 {
@@ -16,6 +18,26 @@ class PurchaseCourse extends Model
     {
         // get payment details
         $payment_details = session('payment_details');
+
+        // Deduct points if they were used
+        if (isset($payment_details['custom_field']['points_used']) && $payment_details['custom_field']['points_used'] > 0) {
+            $user = Auth::user();
+            $pointsToDeduct = $payment_details['custom_field']['points_used'];
+
+            if ($user->points >= $pointsToDeduct) {
+                $user->points -= $pointsToDeduct;
+                $user->save();
+
+                // Create a transaction log for spending points
+                PointTransaction::create([
+                    'user_id' => $user->id,
+                    'points' => -$pointsToDeduct,
+                    'reason' => 'Used for course purchase discount',
+                    'related_type' => null, // Or maybe link to payment history? For now, null.
+                    'related_id' => null,
+                ]);
+            }
+        }
 
         if (Session::has('keys')) {
             $transaction_keys          = session('keys');

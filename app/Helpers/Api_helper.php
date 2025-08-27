@@ -3,6 +3,7 @@
 
 use App\Models\Addon;
 use App\Models\NotificationSetting;
+use App\Services\GamificationService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use App\Models\{Course, Category, Review};
@@ -347,6 +348,12 @@ if (!function_exists('update_watch_history_manually')) {
                 array_push($lesson_ids, $lesson_id);
                 $total_lesson = DB::table('lessons')->where('course_id', $course_id)->get();
                 $course_progress = (100 / count($total_lesson)) * count($lesson_ids);
+
+            // Award badges for completing a lesson
+            $gamificationService = new GamificationService();
+            $user = \App\Models\User::find($user_id);
+            $gamificationService->checkAndAwardBadges($user, 'complete_lessons');
+
 
                 if ($course_progress >= 100 && $query->completed_date == null) {
                     $completed_date = time();

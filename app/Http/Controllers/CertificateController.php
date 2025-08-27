@@ -38,8 +38,7 @@ class CertificateController extends Controller
 
         // Add User Name (Coordinates and font size are guesses and will need refinement)
         $image->text($user->name, 400, 300, function ($font) {
-            // I'll need to find a font file or use a default one.
-            // $font->file(public_path('fonts/your-font.ttf'));
+            $font->file(public_path('assets/frontend/default/fonts/Roboto-Regular.ttf'));
             $font->size(32);
             $font->color('#000000');
             $font->align('center');
@@ -48,6 +47,7 @@ class CertificateController extends Controller
 
         // Add Course Name
         $image->text($course->title, 400, 400, function ($font) {
+            $font->file(public_path('assets/frontend/default/fonts/Roboto-Regular.ttf'));
             $font->size(24);
             $font->color('#000000');
             $font->align('center');
@@ -56,6 +56,7 @@ class CertificateController extends Controller
 
         // Add Completion Date
         $image->text(date('F j, Y'), 400, 500, function ($font) {
+            $font->file(public_path('assets/frontend/default/fonts/Roboto-Regular.ttf'));
             $font->size(20);
             $font->color('#000000');
             $font->align('center');

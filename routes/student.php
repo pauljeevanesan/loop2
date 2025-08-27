@@ -14,6 +14,7 @@ use App\Http\Controllers\student\MyBootcampsController;
 use App\Http\Controllers\student\MyCoursesController;
 use App\Http\Controllers\student\MyProfileController;
 use App\Http\Controllers\student\MyCertificatesController;
+use App\Http\Controllers\student\MyBadgesController;
 use App\Http\Controllers\student\PointHistoryController;
 use App\Http\Controllers\student\MyTeamPackageController;
 use App\Http\Controllers\student\OfflinePaymentController;
@@ -24,11 +25,11 @@ use App\Http\Controllers\student\WishListController;
 use App\Http\Controllers\student\TutorBookingController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AIPlannerController;
-use App\Http\Livewire\QuizPlayer;
+use App\Http\Controllers\AI\QuizPlayerController;
 
 Route::middleware(['auth'])->group(function () {
-    // Quiz Player
-    Route::get('/quiz/{id}', QuizPlayer::class)->name('quiz.take');
+    // AI Quiz Player
+    Route::get('/ai-quiz/{id}', [QuizPlayerController::class, 'show'])->name('quiz.take');
 
     // AI Course Planner
     Route::get('/ai-course-planner', [AIPlannerController::class, 'index'])->name('ai.course.planner');
@@ -42,6 +43,9 @@ Route::middleware(['auth'])->group(function () {
 
     // my certificates
     Route::get('my-certificates', [MyCertificatesController::class, 'index'])->name('my.certificates');
+
+    // my badges
+    Route::get('my-badges', [MyBadgesController::class, 'index'])->name('my.badges');
 
     // my points history
     Route::get('my-points', [PointHistoryController::class, 'index'])->name('my.points');

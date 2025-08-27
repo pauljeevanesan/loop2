@@ -71,6 +71,9 @@ class QuizPlayer extends Component
         $gamificationService = new GamificationService();
         $gamificationService->awardPoints(Auth::user(), 'pass_quiz', $quizResult);
 
+        // Check for any badges the user might have earned
+        $gamificationService->checkAndAwardBadges(Auth::user(), 'perfect_quiz_score', $quizResult);
+
         $this->quizFinished = true;
 
         // --- Certificate Generation Logic ---
@@ -98,6 +101,6 @@ class QuizPlayer extends Component
     {
         return view('livewire.quiz-player', [
             'currentQuestion' => $this->questions[$this->currentQuestionIndex]
-        ])->layout('layouts.default'); // Using the main app layout
+        ]);
     }
 }

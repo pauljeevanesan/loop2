@@ -32,6 +32,12 @@ class GamificationSettingsSeeder extends Seeder
                 'points' => 100,
                 'is_active' => true,
             ],
+            [
+                'action_name' => 'points_to_currency_rate',
+                'display_name' => 'Points per $1 USD',
+                'points' => 100, // Default value: 100 points = $1
+                'is_active' => true,
+            ],
         ];
 
         foreach ($settings as $setting) {

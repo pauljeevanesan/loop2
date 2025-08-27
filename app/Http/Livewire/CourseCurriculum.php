@@ -118,6 +118,6 @@ class CourseCurriculum extends Component
         }
 
         // Redirect to the new quiz
-        return redirect()->route('quiz.take', ['id' => $quiz->id]); // Assuming a route name 'quiz.take'
+        return redirect()->route('quiz.take', ['id' => $quiz->id]);
     }
 }

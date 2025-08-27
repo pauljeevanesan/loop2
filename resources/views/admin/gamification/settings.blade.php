@@ -16,8 +16,8 @@
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
-                                        <th>Action</th>
-                                        <th>Points Awarded</th>
+                                        <th>Setting / Action</th>
+                                        <th>Value / Points</th>
                                         <th>Status</th>
                                     </tr>
                                 </thead>
@@ -29,12 +29,16 @@
                                                 <input type="number" class="form-control" name="settings[{{ $action_name }}][points]" value="{{ $setting->points }}">
                                             </td>
                                             <td>
+                                                @if ($action_name !== 'points_to_currency_rate')
                                                 <div class="form-check form-switch">
                                                     <input class="form-check-input" type="checkbox" name="settings[{{ $action_name }}][is_active]" value="1" @if($setting->is_active) checked @endif>
                                                     <label class="form-check-label">
                                                         {{ $setting->is_active ? 'Active' : 'Inactive' }}
                                                     </label>
                                                 </div>
+                                                @else
+                                                    <span class="badge bg-info">System Setting</span>
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
